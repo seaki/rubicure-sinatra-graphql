@@ -12,3 +12,5 @@ gem "rubicure", "~> 1.2"
 
 gem "rack-test", "~> 1.1", :group => :test
 gem "rspec", "~> 3.8", :group => :test
+
+gem "graphql", "~> 1.9"
