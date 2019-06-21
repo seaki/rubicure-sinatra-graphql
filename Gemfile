@@ -14,3 +14,7 @@ gem "rack-test", "~> 1.1", :group => :test
 gem "rspec", "~> 3.8", :group => :test
 
 gem "graphql", "~> 1.9"
+
+gem "rack-contrib", "~> 2.1"
+
+gem "sinatra-contrib", "~> 2.0"
