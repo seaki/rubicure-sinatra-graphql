@@ -17,4 +17,4 @@ bundle install -j4
 COPY . ${APP_ROOT}
 
 EXPOSE 4567
-CMD ["ruby", "rubicure-sinatra-graphql.rb", "-o", "0.0.0.0"]
+CMD ["ruby", "app.rb", "-o", "0.0.0.0"]
