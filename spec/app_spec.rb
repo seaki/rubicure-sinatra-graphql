@@ -5,4 +5,9 @@ describe "rubicure-sinatra-graphql Application" do
     get '/'
     expect(last_response).to be_ok
   end
+
+  it "should allow accessing the /graphql endpoint" do
+    post '/graphql'
+    expect(last_response).to be_ok
+  end
 end
