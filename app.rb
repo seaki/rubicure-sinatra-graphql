@@ -1,9 +1,14 @@
 require 'sinatra'
 require 'sinatra/json'
+require 'slim'
 require 'rack/contrib'
 require_relative 'graphql/schema'
 
 use Rack::PostBodyContentTypeParser
+
+get '/' do
+  slim :index
+end
 
 post '/graphql' do
   result = Schema.execute(
