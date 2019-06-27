@@ -18,3 +18,5 @@ gem "graphql", "~> 1.9"
 gem "rack-contrib", "~> 2.1"
 
 gem "sinatra-contrib", "~> 2.0"
+
+gem "slim", "~> 4.0"
