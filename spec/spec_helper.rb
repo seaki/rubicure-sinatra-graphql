@@ -1,5 +1,6 @@
 require 'rack/test'
 require 'rspec'
+require 'json'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -11,3 +12,10 @@ module RSpecMixin
 end
 
 RSpec.configure { |c| c.include RSpecMixin }
+
+RSpec.configure do |config|
+  # ...
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+end
