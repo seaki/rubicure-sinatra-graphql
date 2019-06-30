@@ -1,6 +1,13 @@
 require 'graphql'
-require_relative 'query'
+require_relative 'types/base_object'
+require_relative 'types/attack_message_type'
+require_relative 'types/transform_message_type'
+require_relative 'types/girl_type'
+require_relative 'types/color_type'
+require_relative 'types/movie_type'
+require_relative 'types/series_type'
+require_relative 'types/query_type'
 
 class Schema < GraphQL::Schema
-  query QueryType
+  query Types::QueryType
 end
