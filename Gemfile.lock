@@ -70,7 +70,7 @@ DEPENDENCIES
   rack-contrib (~> 2.1)
   rack-test (~> 1.1)
   rspec (~> 3.8)
-  rubicure (~> 1.2)
+  rubicure (>= 1.2.1)
   sinatra (~> 2.0)
   sinatra-contrib (~> 2.0)
   slim (~> 4.0)
