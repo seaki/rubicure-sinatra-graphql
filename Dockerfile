@@ -12,6 +12,7 @@ COPY Gemfile.lock ${APP_ROOT}/Gemfile.lock
 RUN apk update && \
 apk upgrade && \
 apk add --update --no-cache tzdata && \
+gem install bundler -v 2.1.3 && \
 bundle install -j4
 
 COPY . ${APP_ROOT}
