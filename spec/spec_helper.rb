@@ -1,6 +1,7 @@
 require 'rack/test'
 require 'rspec'
 require 'json'
+require 'timecop'
 
 ENV['RACK_ENV'] = 'test'
 
