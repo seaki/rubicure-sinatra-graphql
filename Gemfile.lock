@@ -61,6 +61,7 @@ GEM
     temple (0.8.2)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timecop (0.9.1)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
 
@@ -77,6 +78,7 @@ DEPENDENCIES
   sinatra (~> 2.0)
   sinatra-contrib (~> 2.0)
   slim (~> 4.0)
+  timecop
 
 BUNDLED WITH
    2.1.3

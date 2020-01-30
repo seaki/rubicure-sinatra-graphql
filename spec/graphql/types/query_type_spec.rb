@@ -10,7 +10,7 @@ RSpec.describe Types::QueryType do
   end
 
   # Call `result` to execute the query
-  let(:result) do 
+  let(:result) do
     post '/graphql', query, headers
     res = JSON.parse(last_response.body)
     # Print any errors
@@ -109,15 +109,30 @@ QUERYSTRING
 QUERYSTRING
     end
 
-    context "now" do
+    context "now at 2020-01-26" do
+      around do |e|
+        Timecop.freeze('2020-01-26') { e.run }
+      end
       it "returns current series" do
         expect(result["data"]["now"]["seriesName"]).to eq Precure.now.series_name
       end
     end
 
-    context "current" do
+    context "current at 2020-01-26" do
+      around do |e|
+        Timecop.freeze('2020-01-26') { e.run }
+      end
       it "returns current series" do
         expect(result["data"]["current"]["seriesName"]).to eq Precure.now.series_name
+      end
+    end
+
+    context "at 2020-02-01" do
+      around do |e|
+        Timecop.freeze('2020-02-01') { e.run }
+      end
+      it "returns error" do
+        expect { result }.to raise_error(Rubicure::NotOnAirError)
       end
     end
   end
@@ -134,6 +149,9 @@ QUERYSTRING
 QUERYSTRING
     end
 
+    around do |e|
+      Timecop.freeze('2020-01-26') { e.run }
+    end
     it "returns current series" do
       expect(result["data"]["series"]["seriesName"]).to eq Precure.now.series_name
     end
@@ -151,6 +169,9 @@ QUERYSTRING
 QUERYSTRING
     end
 
+    around do |e|
+      Timecop.freeze('2020-01-26') { e.run }
+    end
     it "returns current series" do
       expect(result["data"]["series"]["seriesName"]).to eq Precure.now.series_name
     end
