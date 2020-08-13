@@ -9,7 +9,7 @@ GEM
     backports (3.18.1)
     concurrent-ruby (1.1.7)
     diff-lcs (1.4.4)
-    graphql (1.11.2)
+    graphql (1.11.3)
     hashie (4.1.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
