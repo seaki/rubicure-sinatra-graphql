@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## [1.3.5.1] - 2020-10-28
+
+* Fix PrecureMiracleLeap returns 64 girls, 13 girls expected (#151)
+
 ## [1.3.5.0] - 2020-10-27
 
 * Update rubicure gem to 1.3.5
