@@ -11,7 +11,7 @@ GEM
     diff-lcs (1.4.4)
     graphql (1.11.6)
     hashie (4.1.0)
-    i18n (1.8.5)
+    i18n (1.8.6)
       concurrent-ruby (~> 1.0)
     minitest (5.14.2)
     multi_json (1.15.0)
