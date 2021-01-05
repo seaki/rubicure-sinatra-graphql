@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## [2.0.0.0] - 2021-01-05
+
+### Breaking changes :bomb:
+* Drop support for Ruby 2.3 (#172)
+
+### Others
+* Update rubicure gem to 2.0.0 (#167)
+
 ## [1.3.5.1] - 2020-10-28
 
 * Fix PrecureMiracleLeap returns 64 girls, 13 girls expected (#151)
