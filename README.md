@@ -6,7 +6,7 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 
 ## Requirements
 
-* ruby >= 2.3.0
+* ruby >= 2.4.0
 
 * sinatra ~> 2.0
 
