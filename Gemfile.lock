@@ -6,7 +6,7 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    backports (3.20.1)
+    backports (3.20.2)
     concurrent-ruby (1.1.8)
     diff-lcs (1.4.4)
     graphql (1.12.3)
