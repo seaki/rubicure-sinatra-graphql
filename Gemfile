@@ -6,6 +6,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "graphql", "~> 1.9"
 gem "rubicure", ">= 1.2.1"
+gem "thin", "~> 1.8"
 
 # activesupport >= 6.0.0 requires ruby >= 2.5.0
 gem "activesupport", "< 6.0.0"

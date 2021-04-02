@@ -11,6 +11,7 @@ COPY Gemfile.lock ${APP_ROOT}/Gemfile.lock
 
 RUN apk update && \
 apk upgrade && \
+apk add --update --no-cache --virtual=build-dependencies build-base && \
 apk add --update --no-cache tzdata && \
 gem install bundler -v 2.2.4 && \
 bundle install -j4
