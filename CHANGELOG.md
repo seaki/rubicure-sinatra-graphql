@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## [2.1.1.0] - 2021-04-04
+
+* Update rubicure gem to 2.1.1 (#199)
+* Use Thin instead of WEBrick (#198)
+
 ## [2.1.0.0] - 2021-03-28
 
 * Update rubicure gem to 2.1.0 (#195)
