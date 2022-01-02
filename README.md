@@ -6,17 +6,16 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 
 ## Requirements
 
-* ruby >= 2.4.0
+* ruby >= 2.6.0
 
 * sinatra ~> 2.0
 
-* rubicure >= 1.2.1
+* rubicure >= 3.0.0
 
 ## How to run in Docker
 
 ```
 $ docker-compose build
-$ docker-compose run --rm web bundle install
 $ docker-compose up -d
 ```
 
