@@ -4,7 +4,7 @@ require 'slim'
 require 'rack/contrib'
 require_relative 'graphql/schema'
 
-use Rack::PostBodyContentTypeParser
+use Rack::JSONBodyParser
 
 get '/' do
   slim :index
