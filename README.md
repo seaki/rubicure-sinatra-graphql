@@ -10,7 +10,7 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 
 * sinatra ~> 2.0
 
-* rubicure >= 3.0.0
+* rubicure >= 3.0.1
 
 ## How to run in Docker
 
