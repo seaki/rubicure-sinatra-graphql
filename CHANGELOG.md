@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## [3.1.2.0] - 2022-07-10
+
+* Update rubicure gem to 3.1.2 (#272)
+
 ## [3.1.1.0] - 2022-05-25
 
 * Update rubicure gem to 3.1.1 (#266)
