@@ -10,7 +10,7 @@ GEM
     daemons (1.4.0)
     diff-lcs (1.5.0)
     eventmachine (1.2.7)
-    graphql (1.13.16)
+    graphql (1.13.17)
     hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
