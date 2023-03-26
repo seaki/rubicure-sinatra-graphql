@@ -4,15 +4,14 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem "graphql", "~> 1.9"
+gem "graphql"
 gem "rubicure", ">= 1.2.1"
 gem "thin", "~> 1.8"
 
-# activesupport >= 6.0.0 requires ruby >= 2.5.0
 gem "activesupport", "~> 6.1"
 gem "rack-contrib", "~> 2.1"
-gem "sinatra", "= 2.2.4"
-gem "sinatra-contrib", "= 2.2.4"
+gem "sinatra", "~> 2.2"
+gem "sinatra-contrib", "~> 2.2"
 gem "slim", "~> 4.0"
 
 group :test do
