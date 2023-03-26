@@ -9,7 +9,7 @@ gem "rubicure", ">= 1.2.1"
 gem "thin", "~> 1.8"
 
 # activesupport >= 6.0.0 requires ruby >= 2.5.0
-gem "activesupport"
+gem "activesupport", "~> 6.1"
 gem "rack-contrib", "~> 2.1"
 gem "sinatra", "= 2.2.4"
 gem "sinatra-contrib", "= 2.2.4"
