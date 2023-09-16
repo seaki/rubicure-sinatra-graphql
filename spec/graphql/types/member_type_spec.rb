@@ -384,4 +384,21 @@ QUERYSTRING
       it { expect(result["data"]["cureLamer"]["transformMessages"].map{|e| e["transformMessage"].include?("${random_transform_word}")}).to eq [false] }
     end
   end
+
+  describe "cureWing" do
+    let(:query_string) do
+      <<QUERYSTRING
+query {
+  cureWing
+  {
+    memberName
+  }
+}
+QUERYSTRING
+    end
+
+    context "has memberName and it" do
+      it { expect(result["data"]["cureWing"]["memberName"]).to eq Cure.wing.girl_name }
+    end
+  end
 end
