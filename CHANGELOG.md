@@ -1,6 +1,22 @@
 Changelog
 =========
 
+## [3.2.3.0] - 2023-09-17
+
+Cure Wing is a boy... So we
+
+* Add Query.member
+* Add Query.member.memberName
+* Add Query.color.members
+* Add Query.movie.members
+* Add Query.series.members
+* Add deprecation warnings for
+    * Query.girl
+    * Query.girl.girlName
+    * Query.color.girls
+    * Query.movie.girls
+    * Query.series.girls
+
 ## [3.2.3.0] - 2023-09-16
 * Update rubicure gem to 3.2.3 (#319)
 
