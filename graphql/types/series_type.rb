@@ -4,8 +4,8 @@ module Types
     field :title, String, null: false
     field :started_date, String, null: true
     field :ended_date, String, null: true
-    field :girls, [Types::MemberType], null: true
-    field :girls_count, Integer, null: false
+    field :girls, [Types::MemberType], null: true, deprecation_reason: "Cure Wing is a boy."
+    field :girls_count, Integer, null: false, deprecation_reason: "Cure Wing is a boy."
     field :members, [Types::MemberType], null: true
     field :members_count, Integer, null: false
     field :heisei, String, null: true
