@@ -17,7 +17,7 @@ module Types
     field :transform_calls, [String], null: true, description: "Precure's transformation call"
     field :full_name, String, null: false, description: "Precure's name before transformation(full name or human name)"
     field :transform_styles, [String], null: true, description: "Transform styles(if present)"
-    field :pikarin_janken, String, null: true, description: "Pikarin janken(if girl is CurePeace)"
+    field :pikarin_janken, String, null: true, description: "Pikarin janken(if member is CurePeace)"
     field :heisei, String, null: true, description: "Precure's first appearance is in Heisei era"
     field :reiwa, String, null: true, description: "Precure's first appearance is in Reiwa era"
     field :random_transform_words, [String], null: true, description: "Precure's random transform messages(if present)"
