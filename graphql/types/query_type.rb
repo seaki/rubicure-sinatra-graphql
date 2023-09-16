@@ -12,6 +12,13 @@ module Types
       Rubicure::Girl.find(girl_name.intern)
     end
 
+    field :member, Types::MemberType, null: false, description: "Get a Precure" do
+      argument :member_name, String, required: true, description: "Precure's symbol"
+    end
+    def member(member_name:)
+      Rubicure::Girl.find(member_name.intern)
+    end
+
     field :movie, Types::MovieType, null: false, description: "Get information about a movie" do
       argument :movie_name, String, required: true, description: "Movie's symbol"
     end

@@ -401,4 +401,25 @@ QUERYSTRING
       it { expect(result["data"]["cureWing"]["memberName"]).to eq Cure.wing.girl_name }
     end
   end
+
+  describe "member(memberName: \"wing\") between cureWing" do
+    let(:query_string) do
+      <<QUERYSTRING
+query {
+  member(memberName: "wing")
+  {
+    memberName
+  }
+  cureWing
+  {
+    memberName
+  }
+}
+QUERYSTRING
+    end
+
+    context "are" do
+      it { expect(result["data"]["member"]).to eq result["data"]["cureWing"] }
+    end
+  end
 end
