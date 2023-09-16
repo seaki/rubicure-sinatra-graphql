@@ -5,7 +5,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :girl, Types::MemberType, null: false, description: "Get a Precure" do
+    field :girl, Types::MemberType, null: false, description: "Get a Precure", deprecation_reason: "Cure Wing is a boy." do
       argument :girl_name, String, required: true, description: "Precure's symbol"
     end
     def girl(girl_name:)
@@ -75,7 +75,7 @@ module Types
       Precure.miracle_leap
     end
 
-    field :precure_all_girls, [Types::MemberType], null: false, description: "Get all Precure"
+    field :precure_all_girls, [Types::MemberType], null: false, description: "Get all Precure", deprecation_reason: "Cure Wing is a boy."
     def precure_all_girls
       precure_all
     end
@@ -90,12 +90,12 @@ module Types
       Precure
     end
 
-    field :colors, [Types::ColorType], null: false, description: "Get colors and girls"
+    field :colors, [Types::ColorType], null: false, description: "Get colors and members"
     def colors
       Rubicure::Girl.colors
     end
 
-    field :color, Types::ColorType, null: false, description: "Get color and girls specified color" do
+    field :color, Types::ColorType, null: false, description: "Get color and members specified color" do
       argument :color, String, required: true, description: "Specified color"
     end
     def color(color:)
