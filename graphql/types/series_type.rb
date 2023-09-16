@@ -4,7 +4,7 @@ module Types
     field :title, String, null: false
     field :started_date, String, null: true
     field :ended_date, String, null: true
-    field :girls, [Types::GirlType], null: true
+    field :girls, [Types::MemberType], null: true
     field :girls_count, Integer, null: false
     field :heisei, String, null: true
     field :reiwa, String, null: true

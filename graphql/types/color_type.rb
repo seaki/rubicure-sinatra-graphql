@@ -1,7 +1,7 @@
 module Types
   class ColorType < Types::BaseObject
     field :color, String, null: false
-    field :girls, [Types::GirlType], null: true
+    field :girls, [Types::MemberType], null: true
     def color
       object.to_s
     end

@@ -5,7 +5,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :girl, Types::GirlType, null: false, description: "Get a Precure" do
+    field :girl, Types::MemberType, null: false, description: "Get a Precure" do
       argument :girl_name, String, required: true, description: "Precure's symbol"
     end
     def girl(girl_name:)
@@ -33,7 +33,7 @@ module Types
     end
 
     Precure.all_girls.map(&:girl_name).each do |girl|
-      field girl.intern, Types::GirlType, null: false
+      field girl.intern, Types::MemberType, null: false
       # define method dynamically
       define_cure girl.intern
     end
@@ -45,7 +45,7 @@ module Types
       Precure.send(series_name)
     end
 
-    field :precure_all_stars, [Types::GirlType], null: false, description: "Get Precure All Stars" do
+    field :precure_all_stars, [Types::MemberType], null: false, description: "Get Precure All Stars" do
       argument :series, String, required: false, description: "Prescribe which series from Precure All Stars(if absent, prescribes 'Futari wa Pretty Cure' to 'Maho Girls Precure')"
     end
     def precure_all_stars(series:)
@@ -53,27 +53,27 @@ module Types
       Precure.all_stars
     end
 
-    field :precure_dream_stars, [Types::GirlType], null: false, description: "Get Precure seen in 'Precure Dream Stars'"
+    field :precure_dream_stars, [Types::MemberType], null: false, description: "Get Precure seen in 'Precure Dream Stars'"
     def precure_dream_stars
       Precure.dream_stars
     end
 
-    field :precure_super_stars, [Types::GirlType], null: false, description: "Get Precure seen in 'Precure Super Stars'"
+    field :precure_super_stars, [Types::MemberType], null: false, description: "Get Precure seen in 'Precure Super Stars'"
     def precure_super_stars
       Precure.super_stars
     end
 
-    field :precure_miracle_leap, [Types::GirlType], null: false, description: "Get Precure seen in 'Precure Miracle Leap'"
+    field :precure_miracle_leap, [Types::MemberType], null: false, description: "Get Precure seen in 'Precure Miracle Leap'"
     def precure_miracle_leap
       Precure.miracle_leap
     end
 
-    field :precure_all_girls, [Types::GirlType], null: false, description: "Get all Precure"
+    field :precure_all_girls, [Types::MemberType], null: false, description: "Get all Precure"
     def precure_all_girls
       precure_all
     end
 
-    field :precure_all, [Types::GirlType], null: false, description: "Get all Precure"
+    field :precure_all, [Types::MemberType], null: false, description: "Get all Precure"
     def precure_all
       Precure.all
     end

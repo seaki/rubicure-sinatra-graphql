@@ -1,6 +1,6 @@
 require File.expand_path '../../../spec_helper.rb', __FILE__
 
-RSpec.describe Types::GirlType do
+RSpec.describe Types::MemberType do
   let(:headers) do
     { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
   end
