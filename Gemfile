@@ -13,6 +13,7 @@ gem "rack-contrib", "~> 2.1"
 gem "sinatra", "~> 2.2"
 gem "sinatra-contrib", "~> 2.2"
 gem "slim", "~> 4.0"
+gem "racc"
 
 group :test do
     gem "rack-test", "~> 1.1"
