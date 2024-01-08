@@ -48,3 +48,11 @@ updates:
   - dependency-name: ruby
     versions:
     - ">= 3.2"
+- package-ecosystem: docker
+  directory: "/ci/ruby3.2"
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.3"
