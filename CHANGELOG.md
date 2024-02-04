@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## [3.2.6.0] - 2024-02-04
+* Update rubicure gem to 3.2.6 (#345)
+
 ## [3.2.3.1] - 2023-09-17
 
 Cure Wing is a boy... So we
