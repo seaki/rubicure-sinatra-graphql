@@ -20,8 +20,8 @@ GEM
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     racc (1.8.1)
-    rack (2.2.8.1)
-    rack-contrib (2.4.0)
+    rack (2.2.9)
+    rack-contrib (2.5.0)
       rack (< 4)
     rack-protection (2.2.4)
       rack
