@@ -8,9 +8,11 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 
 * ruby >= 2.6.0
 
-* sinatra ~> 2.0
+* sinatra
 
-* rubicure >= 3.0.1
+* rubicure >= 3.2.2 (uses #members)
+
+* Compose V2 (when deploy into container)
 
 ## How to run in Docker
 
