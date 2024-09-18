@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## [3.3.3.0] - 2024-09-18
+* Update rubicure gem to 3.3.3 (#367)
+
+### Breaking changes :bomb:
+* Migrate to Compose V2 (#377)
+
 ## [3.2.6.0] - 2024-02-04
 * Update rubicure gem to 3.2.6 (#345)
 
