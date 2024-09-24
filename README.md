@@ -17,8 +17,8 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 ## How to run in Docker
 
 ```
-$ docker-compose build
-$ docker-compose up -d
+$ docker compose build
+$ docker compose up -d
 ```
 
 ## How to deploy
