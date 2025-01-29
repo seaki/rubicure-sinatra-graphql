@@ -12,10 +12,15 @@ GEM
     daemons (1.4.1)
     diff-lcs (1.5.1)
     eventmachine (1.2.7)
-    graphql (2.1.0)
+    fiber-storage (1.0.0)
+    graphql (2.4.9)
+      base64
+      fiber-storage
+      logger
     hashie (5.0.0)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
+    logger (1.6.5)
     minitest (5.25.1)
     multi_json (1.15.0)
     mustermann (3.0.3)
