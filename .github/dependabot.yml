@@ -17,14 +17,6 @@ updates:
   schedule:
     interval: daily
 - package-ecosystem: docker
-  directory: "/ci/ruby2.6"
-  schedule:
-    interval: daily
-  ignore:
-  - dependency-name: ruby
-    versions:
-    - ">= 2.7"
-- package-ecosystem: docker
   directory: "/ci/ruby2.7"
   schedule:
     interval: daily
