@@ -6,7 +6,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "graphql"
 gem "rubicure"
-gem "thin"
+gem "puma"
 
 gem "activesupport"
 gem "rack-contrib"
