@@ -114,7 +114,7 @@ module Types
 
     field :version, String, null: false
     def version
-      '3.3.3.1'
+      '4.0.2.0'
     end
   end
 end
