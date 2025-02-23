@@ -1,7 +1,7 @@
 FROM ruby:3.3.6-alpine3.19
 
-ENV LANG C.UTF-8
-ENV APP_ROOT /usr/src/rubicure-sinatra-graphql
+ENV LANG=C.UTF-8
+ENV APP_ROOT=/usr/src/rubicure-sinatra-graphql
 
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
