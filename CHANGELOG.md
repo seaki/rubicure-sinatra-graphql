@@ -1,6 +1,15 @@
 Changelog
 =========
 
+## [4.0.2.0] - 2024-09-18
+### Breaking changes :bomb:
+* Drop support for Ruby 2.6 (#408)
+
+### Others
+* Update rubicure gem to 4.0.2 (#405)
+* Add support for Ruby 3.4 (#410)
+* Using puma instead of thin (#414)
+
 ## [3.3.3.1] - 2024-09-24
 * Fix precureAllStars without argument returns error. (#379)
 
