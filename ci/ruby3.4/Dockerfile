@@ -1,6 +1,6 @@
 FROM ruby:3.4.2-alpine3.20
 
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 RUN apk update && \
 apk upgrade && \
