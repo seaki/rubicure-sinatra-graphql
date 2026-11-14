@@ -1,18 +1,34 @@
 # rubicure-sinatra-graphql
 
-[![RSpec](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml/badge.svg?branch=master)](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml?query=branch%3Amaster)
+[![RSpec](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml/badge.svg?branch=ruby-3.1)](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml?query=branch%3Aruby-3.1)
 
 rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precure)" GraphQL implementation based on Rubicure gem, simplified one.
 
 ## Requirements
 
-* ruby >= 2.6.0
+* ruby 3.1 (see [Branches](#branches) for other Ruby versions)
 
 * sinatra
 
 * rubicure >= 3.2.2 (uses #members)
 
 * Compose V2 (when deploy into container)
+
+## Branches
+
+Each supported Ruby version has its own branch. This is the `ruby-3.1` branch.
+
+| Branch | Ruby |
+| --- | --- |
+| `master` | 4.0 |
+| `ruby-3.4` | 3.4 |
+| `ruby-3.3` | 3.3 |
+| `ruby-3.2` | 3.2 |
+| `ruby-3.1` | 3.1 |
+| `ruby-3.0` | 3.0 |
+| `ruby-2.7` | 2.7 |
+
+The branches share the same application code. They differ in the Ruby version pinned in `Gemfile` and the Dockerfiles, and in `Gemfile.lock`, which holds the gem versions that work with that Ruby.
 
 ## How to run in Docker
 
