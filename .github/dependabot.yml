@@ -1,63 +1,59 @@
 version: 2
+# Dependabot only reads this file from the default branch (master). The
+# ruby-* branches are covered from here by the entries with `target-branch`,
+# so keep this file in step with the branches (see "Branches" in README.md).
+#
+# Each branch is pinned to one Ruby series: the bundler entries resolve gems
+# for the Ruby given in that branch's Gemfile, and the docker entries ignore
+# Ruby images newer than that series.
 updates:
+
+# master (Ruby 4.0)
 - package-ecosystem: bundler
   directory: "/"
   schedule:
     interval: daily
   versioning-strategy: lockfile-only
-  ignore:
-  - dependency-name: graphql
-    versions:
-    - 1.12.7
-  - dependency-name: rspec-support
-    versions:
-    - 3.10.2
 - package-ecosystem: docker
   directory: "/"
   schedule:
     interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 4.1"
 - package-ecosystem: docker
-  directory: "/ci/ruby2.7"
+  directory: "/ci/ruby4.0"
   schedule:
     interval: daily
   ignore:
   - dependency-name: ruby
     versions:
-    - ">= 3.0"
+    - ">= 4.1"
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
+
+# ruby-3.4
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-3.4
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
 - package-ecosystem: docker
-  directory: "/ci/ruby3.0"
+  directory: "/"
+  target-branch: ruby-3.4
   schedule:
     interval: daily
   ignore:
   - dependency-name: ruby
     versions:
-    - ">= 3.1"
-- package-ecosystem: docker
-  directory: "/ci/ruby3.1"
-  schedule:
-    interval: daily
-  ignore:
-  - dependency-name: ruby
-    versions:
-    - ">= 3.2"
-- package-ecosystem: docker
-  directory: "/ci/ruby3.2"
-  schedule:
-    interval: daily
-  ignore:
-  - dependency-name: ruby
-    versions:
-    - ">= 3.3"
-- package-ecosystem: docker
-  directory: "/ci/ruby3.3"
-  schedule:
-    interval: daily
-  ignore:
-  - dependency-name: ruby
-    versions:
-    - ">= 3.4"
+    - ">= 3.5"
 - package-ecosystem: docker
   directory: "/ci/ruby3.4"
+  target-branch: ruby-3.4
   schedule:
     interval: daily
   ignore:
@@ -66,5 +62,161 @@ updates:
     - ">= 3.5"
 - package-ecosystem: github-actions
   directory: "/"
+  target-branch: ruby-3.4
+  schedule:
+    interval: daily
+
+# ruby-3.3
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-3.3
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
+- package-ecosystem: docker
+  directory: "/"
+  target-branch: ruby-3.3
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.4"
+- package-ecosystem: docker
+  directory: "/ci/ruby3.3"
+  target-branch: ruby-3.3
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.4"
+- package-ecosystem: github-actions
+  directory: "/"
+  target-branch: ruby-3.3
+  schedule:
+    interval: daily
+
+# ruby-3.2
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-3.2
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
+- package-ecosystem: docker
+  directory: "/"
+  target-branch: ruby-3.2
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.3"
+- package-ecosystem: docker
+  directory: "/ci/ruby3.2"
+  target-branch: ruby-3.2
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.3"
+- package-ecosystem: github-actions
+  directory: "/"
+  target-branch: ruby-3.2
+  schedule:
+    interval: daily
+
+# ruby-3.1
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-3.1
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
+- package-ecosystem: docker
+  directory: "/"
+  target-branch: ruby-3.1
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.2"
+- package-ecosystem: docker
+  directory: "/ci/ruby3.1"
+  target-branch: ruby-3.1
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.2"
+- package-ecosystem: github-actions
+  directory: "/"
+  target-branch: ruby-3.1
+  schedule:
+    interval: daily
+
+# ruby-3.0
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-3.0
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
+- package-ecosystem: docker
+  directory: "/"
+  target-branch: ruby-3.0
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.1"
+- package-ecosystem: docker
+  directory: "/ci/ruby3.0"
+  target-branch: ruby-3.0
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.1"
+- package-ecosystem: github-actions
+  directory: "/"
+  target-branch: ruby-3.0
+  schedule:
+    interval: daily
+
+# ruby-2.7
+- package-ecosystem: bundler
+  directory: "/"
+  target-branch: ruby-2.7
+  schedule:
+    interval: daily
+  versioning-strategy: lockfile-only
+- package-ecosystem: docker
+  directory: "/"
+  target-branch: ruby-2.7
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.0"
+- package-ecosystem: docker
+  directory: "/ci/ruby2.7"
+  target-branch: ruby-2.7
+  schedule:
+    interval: daily
+  ignore:
+  - dependency-name: ruby
+    versions:
+    - ">= 3.0"
+- package-ecosystem: github-actions
+  directory: "/"
+  target-branch: ruby-2.7
   schedule:
     interval: daily
