@@ -6,13 +6,29 @@ rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precu
 
 ## Requirements
 
-* ruby >= 2.6.0
+* ruby 4.0 (see [Branches](#branches) for other Ruby versions)
 
 * sinatra
 
 * rubicure >= 3.2.2 (uses #members)
 
 * Compose V2 (when deploy into container)
+
+## Branches
+
+Each supported Ruby version has its own branch. This is the `master` branch.
+
+| Branch | Ruby |
+| --- | --- |
+| `master` | 4.0 |
+| `ruby-3.4` | 3.4 |
+| `ruby-3.3` | 3.3 |
+| `ruby-3.2` | 3.2 |
+| `ruby-3.1` | 3.1 |
+| `ruby-3.0` | 3.0 |
+| `ruby-2.7` | 2.7 |
+
+The branches share the same application code. They differ in the Ruby version pinned in `Gemfile` and the Dockerfiles, and in `Gemfile.lock`, which holds the gem versions that work with that Ruby.
 
 ## How to run in Docker
 
