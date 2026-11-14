@@ -1,6 +1,6 @@
 # rubicure-sinatra-graphql
 
-[![Build Status](https://api.cirrus-ci.com/github/seaki/rubicure-sinatra-graphql.svg)](https://cirrus-ci.com/github/seaki/rubicure-sinatra-graphql)
+[![RSpec](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml/badge.svg?branch=master)](https://github.com/seaki/rubicure-sinatra-graphql/actions/workflows/rspec.yml?query=branch%3Amaster)
 
 rubicure-sinatra-graphql is Precure, Japanese battle heroine "Pretty Cure (Precure)" GraphQL implementation based on Rubicure gem, simplified one.
 
