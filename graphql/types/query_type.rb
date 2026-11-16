@@ -49,7 +49,11 @@ module Types
       argument :series_name, String, required: true, description: "Series symbol"
     end
     def series(series_name:)
-      Precure.send(series_name)
+      name = series_name.intern
+      return Precure.now if %i[now current].include?(name)
+      # Never pass the argument to Precure.send: it would call any method, e.g. "exit".
+      raise GraphQL::ExecutionError, "unknown series: #{series_name}" unless Rubicure::Series.valid?(name)
+      Rubicure::Series.find(name)
     end
 
     field :precure_all_stars, [Types::MemberType], null: false, description: "Get Precure All Stars" do
