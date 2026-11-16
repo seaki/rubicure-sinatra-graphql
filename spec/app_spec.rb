@@ -65,4 +65,34 @@ describe "rubicure-sinatra-graphql Application" do
       expect(res["errors"]).not_to be_empty
     end
   end
+
+  describe "POST /graphql with variables in a form-encoded request" do
+    let(:query_string) { "query($name: String!) { member(memberName: $name) { memberName } }" }
+    let(:expected) { { "data" => { "member" => { "memberName" => "cure_miracle" } } } }
+
+    it "accepts variables as a JSON string" do
+      post '/graphql', { "query" => query_string, "variables" => '{"name":"miracle"}' }
+      expect(JSON.parse(last_response.body)).to eq expected
+    end
+
+    it "accepts variables as nested parameters" do
+      post '/graphql', { "query" => query_string, "variables" => { "name" => "miracle" } }
+      expect(JSON.parse(last_response.body)).to eq expected
+    end
+
+    it "ignores empty variables" do
+      post '/graphql', { "query" => "{ version }", "variables" => "" }
+      expect(JSON.parse(last_response.body)["data"]["version"]).not_to be_nil
+    end
+
+    it "returns 400 when variables is not valid JSON" do
+      post '/graphql', { "query" => query_string, "variables" => '{"name":' }
+      expect(last_response.status).to eq 400
+    end
+
+    it "returns 400 when variables is not a JSON object" do
+      post '/graphql', { "query" => query_string, "variables" => '["miracle"]' }
+      expect(last_response.status).to eq 400
+    end
+  end
 end
