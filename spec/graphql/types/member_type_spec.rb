@@ -171,6 +171,7 @@ QUERYSTRING
 
     context "has pikarinJanken and it" do
       it { expect(result["data"]["curePeace"]["pikarinJanken"]).to include("ピカピカピカリン") }
+      it { expect(result["data"]["curePeace"]["pikarinJanken"]).to match(/\Aピカピカピカリン\nジャンケンポン！\n（(グー|チョキ|パー|グッチョッパー)）\n\z/) }
     end
   end
 
@@ -273,6 +274,27 @@ QUERYSTRING
     context "of transformStyle is default" do
       it { expect(result["data"]["cureBlack"]["transformMessages"].map{|e| e["transformStyle"]}).to eq %w[default] }
       it { expect(result["data"]["cureBlack"]["attackMessages"].map{|e| e["transformStyle"]}).to eq %w[default] }
+    end
+  end
+
+  describe "transformMessages, attackMessages of a member without transform styles" do
+    let(:query_string) do
+      <<QUERYSTRING
+query {
+  cureBlack
+  {
+    transformMessage
+    transformMessages { transformMessage }
+    attackMessages { attackMessages }
+  }
+}
+QUERYSTRING
+    end
+
+    context "hold the messages of the member" do
+      it { expect(result["data"]["cureBlack"]["transformMessage"]).to eq Cure.black[:transform_message] }
+      it { expect(result["data"]["cureBlack"]["transformMessages"]).to eq [{ "transformMessage" => Cure.black[:transform_message] }] }
+      it { expect(result["data"]["cureBlack"]["attackMessages"]).to eq [{ "attackMessages" => Cure.black[:attack_messages] }] }
     end
   end
 
