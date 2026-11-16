@@ -11,10 +11,12 @@ describe "rubicure-sinatra-graphql Application" do
     expect(last_response).to be_ok
   end
 
-  it "should show the home page with a link to the endpoint" do
+  it "should show the home page, naming the endpoint without linking to it" do
     get '/'
     expect(last_response.content_type).to start_with "text/html"
-    expect(last_response.body).to include("<h1>rubicure-sinatra-graphql</h1>", 'href="./graphql"')
+    expect(last_response.body).to include("<h1>rubicure-sinatra-graphql</h1>", "<p>API endpoint is located at /graphql</p>")
+    # The endpoint only answers POST, so a link (a GET) would lead to 404.
+    expect(last_response.body).not_to include("<a ")
   end
 
   it "should answer in JSON with an error when no query is given" do
