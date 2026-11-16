@@ -222,12 +222,19 @@ QUERYSTRING
     end
 
     # The argument must not reach Precure.send: these are methods of Precure, not series.
-    %w[nothing exit object_id class all_stars].each do |name|
+    ["unknown", "all_stars", "class", "object_id", "send", "exit", ""].each do |name|
       it "returns an error for #{name.inspect}" do
         res = execute(%({ series(seriesName: "#{name}") { title } }))
-        expect(res["data"]).to be_nil
-        expect(res["errors"].map { |e| e["message"] }).to eq ["unknown series: #{name}"]
+        expect(res).to match(
+          "data" => nil,
+          "errors" => [a_hash_including("message" => "unknown series: #{name}", "path" => ["series"])]
+        )
       end
+    end
+
+    it "does not call a method of Precure with the name" do
+      expect(Rubicure::Core.instance).not_to receive(:all_stars)
+      execute(%({ series(seriesName: "all_stars") { title } }))
     end
   end
 
@@ -280,29 +287,33 @@ QUERYSTRING
 
     # A name rubicure does not know, or asking for the series on air while none is,
     # is answered with a GraphQL error rather than with rubicure's exception.
-    context "with a color that does not exist" do
-      let(:query_string) { %({ color(color: "nonexistent") { color } }) }
-      it_behaves_like "a GraphQL error", "unknown color: nonexistent"
+    {
+      '{ member(memberName: "unknown") { memberName } }' => ["member", "unknown member: unknown"],
+      '{ member(memberName: "") { memberName } }' => ["member", "unknown member: "],
+      '{ member(memberName: "class") { memberName } }' => ["member", "unknown member: class"],
+      '{ girl(girlName: "unknown") { girlName } }' => ["girl", "unknown girl: unknown"],
+      '{ movie(movieName: "unknown") { name } }' => ["movie", "unknown movie: unknown"],
+      '{ movie(movieName: "") { name } }' => ["movie", "unknown movie: "],
+      '{ precureAllStars(series: "unknown") { memberName } }' => ["precureAllStars", "unknown movie: unknown"],
+      '{ color(color: "unknown") { color } }' => ["color", "unknown color: unknown"],
+      '{ color(color: "") { color } }' => ["color", "unknown color: "],
+    }.each do |query, (field, message)|
+      context "with #{query}" do
+        it "returns an error" do
+          expect(execute(query)).to match(
+            "data" => nil,
+            "errors" => [a_hash_including("message" => message, "path" => [field])]
+          )
+        end
+      end
     end
 
-    context "with a member that does not exist" do
-      let(:query_string) { %({ member(memberName: "nobody") { memberName } }) }
-      it_behaves_like "a GraphQL error", "unknown member: nobody"
-    end
-
-    context "with a girl that does not exist" do
-      let(:query_string) { %({ girl(girlName: "nobody") { girlName } }) }
-      it_behaves_like "a GraphQL error", "unknown member: nobody"
-    end
-
-    context "with a movie that does not exist" do
-      let(:query_string) { %({ movie(movieName: "nothing") { title } }) }
-      it_behaves_like "a GraphQL error", "unknown movie: nothing"
-    end
-
-    context "with precureAllStars of a movie that does not exist" do
-      let(:query_string) { %({ precureAllStars(series: "nothing") { memberName } }) }
-      it_behaves_like "a GraphQL error", "unknown movie: nothing"
+    context "with precureAllStars of an empty series" do
+      it "is the same as without the argument" do
+        res = execute('{ a: precureAllStars(series: "") { memberName } b: precureAllStars { memberName } }')
+        expect(res["errors"]).to be_nil
+        expect(res["data"]["a"]).to eq res["data"]["b"]
+      end
     end
 
     context "with series(seriesName: \"now\") while no series is on air" do
