@@ -239,6 +239,56 @@ QUERYSTRING
 
     context "version" do
       it { expect(result["data"]["version"]).not_to be_nil }
+      it { expect(result["data"]["version"]).to match(/\A\d+(\.\d+){3}\z/) }
+    end
+  end
+
+  describe "a query that cannot be answered" do
+    # `result` prints the errors it receives; these examples expect them.
+    def execute(query_string)
+      post '/graphql', { "query" => query_string }
+      JSON.parse(last_response.body)
+    end
+
+    shared_examples "a GraphQL error" do
+      it "returns errors and no data" do
+        res = execute(query_string)
+        expect(last_response).to be_ok
+        expect(res["data"]).to be_nil
+        expect(res["errors"]).not_to be_empty
+      end
+    end
+
+    context "with a syntax error" do
+      let(:query_string) { "{ version " }
+      it_behaves_like "a GraphQL error"
+    end
+
+    context "with a field that does not exist" do
+      let(:query_string) { "{ nope }" }
+      it_behaves_like "a GraphQL error"
+    end
+
+    context "with a required argument left out" do
+      let(:query_string) { "{ member { memberName } }" }
+      it_behaves_like "a GraphQL error"
+    end
+
+    context "with a color that does not exist" do
+      let(:query_string) { %({ color(color: "nonexistent") { color } }) }
+      it_behaves_like "a GraphQL error"
+    end
+
+    # The lookups below are left to rubicure, whose exception is not turned into a GraphQL error:
+    # it reaches Sinatra, which answers 500 outside the test environment.
+    context "with a member that does not exist" do
+      it { expect { execute(%({ member(memberName: "nobody") { memberName } })) }.to raise_error(RuntimeError, "unknown girl: nobody") }
+      it { expect { execute(%({ girl(girlName: "nobody") { girlName } })) }.to raise_error(RuntimeError, "unknown girl: nobody") }
+    end
+
+    context "with a movie that does not exist" do
+      it { expect { execute(%({ movie(movieName: "nothing") { title } })) }.to raise_error(Rubicure::UnknownMovieError) }
+      it { expect { execute(%({ precureAllStars(series: "nothing") { memberName } })) }.to raise_error(Rubicure::UnknownMovieError) }
     end
   end
 end
