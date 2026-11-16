@@ -1,4 +1,7 @@
 require 'graphql'
+require 'rubicure'
+require_relative 'types/base_argument'
+require_relative 'types/base_field'
 require_relative 'types/base_object'
 require_relative 'types/attack_message_type'
 require_relative 'types/transform_message_type'

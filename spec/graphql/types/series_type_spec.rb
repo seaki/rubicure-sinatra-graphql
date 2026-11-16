@@ -86,4 +86,61 @@ QUERYSTRING
       it { expect(result["data"]["series"]["reiwa"]).to eq Precure.maho_girls.reiwa?.to_s }
     end
   end
+
+  describe "series on air" do
+    # A series that is still on air has no ended_date.
+    let(:on_air_series) do
+      Rubicure::Series[series_name: "on_air", title: "On air", started_date: started_date, girls: %w[cure_black]]
+    end
+
+    let(:query_string) do
+      <<QUERYSTRING
+{
+  now {
+    seriesName
+    title
+    startedDate
+    endedDate
+    girlsCount
+    membersCount
+    heisei
+    reiwa
+  }
+}
+QUERYSTRING
+    end
+
+    before do
+      allow(Rubicure::Core.instance).to receive(:now).and_return(on_air_series)
+    end
+
+    context "started in Reiwa" do
+      let(:started_date) { Date.new(2019, 5, 1) }
+
+      it "returns every field, with null as endedDate" do
+        expect(result).to eq(
+          "data" => {
+            "now" => {
+              "seriesName" => "on_air",
+              "title" => "On air",
+              "startedDate" => "2019-05-01",
+              "endedDate" => nil,
+              "girlsCount" => 1,
+              "membersCount" => 1,
+              "heisei" => "false",
+              "reiwa" => "true",
+            },
+          }
+        )
+      end
+    end
+
+    context "started in Heisei" do
+      let(:started_date) { Date.new(2019, 4, 30) }
+
+      it { expect(result["data"]["now"]["endedDate"]).to be_nil }
+      it { expect(result["data"]["now"]["heisei"]).to eq "true" }
+      it { expect(result["data"]["now"]["reiwa"]).to eq "true" }
+    end
+  end
 end
