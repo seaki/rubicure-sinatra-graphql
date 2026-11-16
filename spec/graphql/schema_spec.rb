@@ -110,4 +110,29 @@ QUERYSTRING
       expect(deprecated_fields("Color")).to contain_exactly("girls")
     end
   end
+
+  describe "limits" do
+    # 1666 fields of three tokens each (alias, colon, name) and the two braces: 5000 tokens.
+    # The fields are aliased because validating thousands of fields with the same name
+    # takes graphql-ruby 2.5 longer than its validation timeout.
+    let(:fields) { (1..1666).map { |i| "a#{i}: version" }.join(" ") }
+
+    it "executes a query of 5000 tokens" do
+      res = execute("{ #{fields} }")
+      expect(res["errors"]).to be_nil
+      expect(res["data"].size).to eq 1666
+    end
+
+    it "rejects a query of 5001 tokens" do
+      res = execute("{ #{fields} version }")
+      expect(res["data"]).to be_nil
+      expect(res["errors"]).not_to be_empty
+    end
+
+    it "stops validating after 100 errors" do
+      res = execute("{ #{(1..150).map { |i| "nope#{i}" }.join(' ')} }")
+      expect(res["data"]).to be_nil
+      expect(res["errors"].size).to be_between(100, 101)
+    end
+  end
 end
