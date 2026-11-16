@@ -13,4 +13,12 @@ require_relative 'types/query_type'
 
 class Schema < GraphQL::Schema
   query Types::QueryType
+
+  # The limits below are the ones of RubicureGraphqlSchema in rubicure-graphql.
+
+  # Limit the size of incoming queries:
+  max_query_string_tokens(5000)
+
+  # Stop validating when it encounters this many errors:
+  validate_max_errors(100)
 end
