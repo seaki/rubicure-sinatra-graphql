@@ -11,6 +11,25 @@ describe "rubicure-sinatra-graphql Application" do
     expect(last_response).to be_ok
   end
 
+  it "should show the home page with a link to the endpoint" do
+    get '/'
+    expect(last_response.content_type).to start_with "text/html"
+    expect(last_response.body).to include("<h1>rubicure-sinatra-graphql</h1>", 'href="./graphql"')
+  end
+
+  it "should answer in JSON with an error when no query is given" do
+    post '/graphql'
+    expect(last_response.content_type).to eq "application/json"
+    res = JSON.parse(last_response.body)
+    expect(res["data"]).to be_nil
+    expect(res["errors"]).not_to be_empty
+  end
+
+  it "should answer 404 for an unknown path" do
+    get '/nothing'
+    expect(last_response.status).to eq 404
+  end
+
   describe "POST /graphql with a JSON body" do
     # The content type has to be given as CONTENT_TYPE: rack-test ignores a 'Content-Type' env key
     # and would send the request form-encoded.
