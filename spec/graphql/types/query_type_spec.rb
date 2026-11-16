@@ -202,6 +202,32 @@ QUERYSTRING
     end
   end
 
+  describe "series(seriesName:)" do
+    # Unlike `result`, a query that makes the server call Kernel#exit fails the example instead of ending the run.
+    def execute(query_string)
+      post '/graphql', { "query" => query_string }
+      JSON.parse(last_response.body)
+    rescue SystemExit
+      raise "the query terminated the process"
+    end
+
+    it "finds every series by its name, including aliases" do
+      Rubicure::Series.names.each do |name|
+        res = execute(%({ series(seriesName: "#{name}") { title } }))
+        expect(res).to eq({ "data" => { "series" => { "title" => Rubicure::Series.find(name).title } } })
+      end
+    end
+
+    # The argument must not reach Precure.send: these are methods of Precure, not series.
+    %w[nothing exit object_id class all_stars].each do |name|
+      it "returns an error for #{name.inspect}" do
+        res = execute(%({ series(seriesName: "#{name}") { title } }))
+        expect(res["data"]).to be_nil
+        expect(res["errors"].map { |e| e["message"] }).to eq ["unknown series: #{name}"]
+      end
+    end
+  end
+
   describe "version" do
     let(:query_string) do
       <<QUERYSTRING
