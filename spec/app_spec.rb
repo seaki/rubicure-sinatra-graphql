@@ -44,4 +44,25 @@ describe "rubicure-sinatra-graphql Application" do
       expect(last_response.status).to eq 400
     end
   end
+
+  describe "POST /graphql with several operations in one document" do
+    let(:document) { "query Version { version } query Colors { colors { color } }" }
+
+    it "executes the operation named by operationName in a JSON body" do
+      post '/graphql', { "query" => document, "operationName" => "Colors" }.to_json, 'CONTENT_TYPE' => 'application/json'
+      expect(JSON.parse(last_response.body)).to eq({ "data" => { "colors" => Rubicure::Girl.colors.map { |color| { "color" => color.to_s } } } })
+    end
+
+    it "executes the operation named by operationName in a form-encoded request" do
+      post '/graphql', { "query" => document, "operationName" => "Version" }
+      expect(JSON.parse(last_response.body)["data"].keys).to eq ["version"]
+    end
+
+    it "returns an error when operationName is missing" do
+      post '/graphql', { "query" => document }
+      res = JSON.parse(last_response.body)
+      expect(res["data"]).to be_nil
+      expect(res["errors"]).not_to be_empty
+    end
+  end
 end
