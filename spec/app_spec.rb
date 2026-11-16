@@ -104,14 +104,52 @@ describe "rubicure-sinatra-graphql Application" do
       expect(JSON.parse(last_response.body)["data"]["version"]).not_to be_nil
     end
 
-    it "returns 400 when variables is not valid JSON" do
-      post '/graphql', { "query" => query_string, "variables" => '{"name":' }
-      expect(last_response.status).to eq 400
+    it "ignores the string null as variables" do
+      post '/graphql', { "query" => "{ version }", "variables" => "null" }
+      expect(JSON.parse(last_response.body)["data"]["version"]).not_to be_nil
+    end
+  end
+
+  # The same answers as rubicure-graphql gives.
+  describe "POST /graphql with variables that are not an object" do
+    def post_json(variables)
+      post '/graphql', { "query" => "{ version }", "variables" => variables }.to_json, 'CONTENT_TYPE' => 'application/json'
     end
 
-    it "returns 400 when variables is not a JSON object" do
-      post '/graphql', { "query" => query_string, "variables" => '["miracle"]' }
+    def rejected_with(message)
       expect(last_response.status).to eq 400
+      expect(last_response.content_type).to eq "application/json"
+      expect(JSON.parse(last_response.body)).to eq({ "errors" => [{ "message" => message }] })
+    end
+
+    it "rejects a string that is not JSON" do
+      post_json("{")
+      rejected_with "variables is not valid JSON"
+    end
+
+    it "rejects a JSON string that is not an object" do
+      post_json("[1]")
+      rejected_with "variables must be an object"
+    end
+
+    it "rejects a number" do
+      post_json(1)
+      rejected_with "variables must be an object"
+    end
+
+    it "rejects an array" do
+      post_json([1])
+      rejected_with "variables must be an object"
+    end
+
+    it "rejects a form-encoded string that is not JSON" do
+      post '/graphql', { "query" => "{ version }", "variables" => "{" }
+      rejected_with "variables is not valid JSON"
+    end
+
+    it "accepts null" do
+      post_json(nil)
+      expect(JSON.parse(last_response.body)["data"]["version"]).not_to be_nil
     end
   end
 end
