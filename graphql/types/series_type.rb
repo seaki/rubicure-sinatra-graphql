@@ -1,3 +1,7 @@
+require 'rubicure'
+
+using Rubicure::Concerns::Gengou
+
 module Types
   class SeriesType < Types::BaseObject
     field :series_name, String, null: false
@@ -28,6 +32,8 @@ module Types
     end
 
     def heisei
+      # Rubicure::Series#heisei? reads ended_date, which a series still on air does not have.
+      return object.started_date.heisei? unless object.has_key?(:ended_date)
       object.heisei?
     end
 
