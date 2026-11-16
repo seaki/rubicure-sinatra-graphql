@@ -154,4 +154,35 @@ QUERYSTRING
       it { expect(result["data"]["movie"]["members"].map{|e| e["memberName"]}).to eq Precure.miracle_leap.map(&:girl_name) }
     end
   end
+
+  # Like miracle_universe and miracle_leap, these movies have their own member list in rubicure.
+  %w[dream_stars super_stars].each do |movie_name|
+    describe movie_name do
+      let(:query_string) do
+        <<QUERYSTRING
+{
+  movie(movieName: "#{movie_name}")
+  {
+    name
+    title
+    girls
+    {
+      girlName
+    }
+    members
+    {
+      memberName
+    }
+  }
+}
+QUERYSTRING
+      end
+      let(:expected_names) { Precure.public_send(movie_name).map(&:girl_name) }
+
+      it { expect(result["data"]["movie"]["name"]).to eq movie_name }
+      it { expect(result["data"]["movie"]["title"]).to eq Rubicure::Movie.find(movie_name.intern).title }
+      it { expect(result["data"]["movie"]["girls"].map{|e| e["girlName"]}).to eq expected_names }
+      it { expect(result["data"]["movie"]["members"].map{|e| e["memberName"]}).to eq expected_names }
+    end
+  end
 end
