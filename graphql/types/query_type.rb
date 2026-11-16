@@ -9,21 +9,21 @@ module Types
       argument :girl_name, String, required: true, description: "Precure's symbol"
     end
     def girl(girl_name:)
-      Rubicure::Girl.find(girl_name.intern)
+      find_member(girl_name)
     end
 
     field :member, Types::MemberType, null: false, description: "Get a Precure" do
       argument :member_name, String, required: true, description: "Precure's symbol"
     end
     def member(member_name:)
-      Rubicure::Girl.find(member_name.intern)
+      find_member(member_name)
     end
 
     field :movie, Types::MovieType, null: false, description: "Get information about a movie" do
       argument :movie_name, String, required: true, description: "Movie's symbol"
     end
     def movie(movie_name:)
-      Rubicure::Movie.find(movie_name.intern)
+      find_movie(movie_name)
     end
 
     field :all_movies, [Types::MovieType], null: false, description: "Get all movies"
@@ -50,7 +50,7 @@ module Types
     end
     def series(series_name:)
       name = series_name.intern
-      return Precure.now if %i[now current].include?(name)
+      return now if %i[now current].include?(name)
       # Never pass the argument to Precure.send: it would call any method, e.g. "exit".
       raise GraphQL::ExecutionError, "unknown series: #{series_name}" unless Rubicure::Series.valid?(name)
       Rubicure::Series.find(name)
@@ -60,8 +60,9 @@ module Types
       argument :series, String, required: false, description: "Prescribe which series from Precure All Stars(if absent, prescribes 'Futari wa Pretty Cure' to 'Maho Girls Precure')"
     end
     def precure_all_stars(series: nil)
-      return Precure.all_stars(series.intern) if series.present?
-      Precure.all_stars
+      return Precure.all_stars unless series.present?
+      find_movie(series)
+      Precure.all_stars(series.intern)
     end
 
     field :precure_dream_stars, [Types::MemberType], null: false, description: "Get Precure seen in 'Precure Dream Stars'"
@@ -103,22 +104,39 @@ module Types
       argument :color, String, required: true, description: "Specified color"
     end
     def color(color:)
-      return color.intern if Rubicure::Girl.colors.include?(color.intern)
+      raise GraphQL::ExecutionError, "unknown color: #{color}" unless Rubicure::Girl.colors.include?(color.intern)
+      color.intern
     end
 
     field :now, Types::SeriesType, null: false, description: "Get now on air series"
     def now
       Precure.now
+    rescue Rubicure::NotOnAirError => e
+      raise GraphQL::ExecutionError, e.message
     end
 
     field :current, Types::SeriesType, null: false, description: "Get now on air series"
     def current
-      Precure.current
+      now
     end
 
     field :version, String, null: false
     def version
       '4.0.2.0'
+    end
+
+    private
+
+    # A name that rubicure does not know is answered with a GraphQL error
+    # instead of letting rubicure's exception escape as a 500.
+    def find_member(name)
+      raise GraphQL::ExecutionError, "unknown member: #{name}" unless Rubicure::Girl.valid?(name.intern)
+      Rubicure::Girl.find(name.intern)
+    end
+
+    def find_movie(name)
+      raise GraphQL::ExecutionError, "unknown movie: #{name}" unless Rubicure::Movie.valid?(name.intern)
+      Rubicure::Movie.find(name.intern)
     end
   end
 end
