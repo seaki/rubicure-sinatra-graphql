@@ -21,6 +21,7 @@ post '/graphql' do
   result = Schema.execute(
     params[:query],
     variables: params[:variables],
+    operation_name: params[:operationName],
     context: { current_user: nil },
   )
   json result
