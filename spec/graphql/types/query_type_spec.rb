@@ -157,7 +157,10 @@ QUERYSTRING
         Timecop.freeze('2020-02-01') { e.run }
       end
       it "returns error" do
-        expect { result }.to raise_error(Rubicure::NotOnAirError)
+        post '/graphql', query
+        res = JSON.parse(last_response.body)
+        expect(res["data"]).to be_nil
+        expect(res["errors"].map { |e| e["message"] }).to eq ["Not on air precure!", "Not on air precure!"]
       end
     end
   end
@@ -250,12 +253,13 @@ QUERYSTRING
       JSON.parse(last_response.body)
     end
 
-    shared_examples "a GraphQL error" do
+    shared_examples "a GraphQL error" do |message|
       it "returns errors and no data" do
         res = execute(query_string)
         expect(last_response).to be_ok
         expect(res["data"]).to be_nil
         expect(res["errors"]).not_to be_empty
+        expect(res["errors"].map { |e| e["message"] }).to eq [message] if message
       end
     end
 
@@ -274,21 +278,39 @@ QUERYSTRING
       it_behaves_like "a GraphQL error"
     end
 
+    # A name rubicure does not know, or asking for the series on air while none is,
+    # is answered with a GraphQL error rather than with rubicure's exception.
     context "with a color that does not exist" do
       let(:query_string) { %({ color(color: "nonexistent") { color } }) }
-      it_behaves_like "a GraphQL error"
+      it_behaves_like "a GraphQL error", "unknown color: nonexistent"
     end
 
-    # The lookups below are left to rubicure, whose exception is not turned into a GraphQL error:
-    # it reaches Sinatra, which answers 500 outside the test environment.
     context "with a member that does not exist" do
-      it { expect { execute(%({ member(memberName: "nobody") { memberName } })) }.to raise_error(RuntimeError, "unknown girl: nobody") }
-      it { expect { execute(%({ girl(girlName: "nobody") { girlName } })) }.to raise_error(RuntimeError, "unknown girl: nobody") }
+      let(:query_string) { %({ member(memberName: "nobody") { memberName } }) }
+      it_behaves_like "a GraphQL error", "unknown member: nobody"
+    end
+
+    context "with a girl that does not exist" do
+      let(:query_string) { %({ girl(girlName: "nobody") { girlName } }) }
+      it_behaves_like "a GraphQL error", "unknown member: nobody"
     end
 
     context "with a movie that does not exist" do
-      it { expect { execute(%({ movie(movieName: "nothing") { title } })) }.to raise_error(Rubicure::UnknownMovieError) }
-      it { expect { execute(%({ precureAllStars(series: "nothing") { memberName } })) }.to raise_error(Rubicure::UnknownMovieError) }
+      let(:query_string) { %({ movie(movieName: "nothing") { title } }) }
+      it_behaves_like "a GraphQL error", "unknown movie: nothing"
+    end
+
+    context "with precureAllStars of a movie that does not exist" do
+      let(:query_string) { %({ precureAllStars(series: "nothing") { memberName } }) }
+      it_behaves_like "a GraphQL error", "unknown movie: nothing"
+    end
+
+    context "with series(seriesName: \"now\") while no series is on air" do
+      around do |e|
+        Timecop.freeze('2020-02-01') { e.run }
+      end
+      let(:query_string) { %({ series(seriesName: "now") { seriesName } }) }
+      it_behaves_like "a GraphQL error", "Not on air precure!"
     end
   end
 end
