@@ -84,4 +84,30 @@ QUERYSTRING
       end
     end
   end
+
+  describe "introspection" do
+    def deprecated_fields(type_name)
+      res = execute(%({ __type(name: "#{type_name}") { fields(includeDeprecated: true) { name isDeprecated } } }))
+      res["data"]["__type"]["fields"].select { |field| field["isDeprecated"] }.map { |field| field["name"] }
+    end
+
+    it "is available" do
+      expect(execute("{ __schema { queryType { name } } }")).to eq({ "data" => { "__schema" => { "queryType" => { "name" => "Query" } } } })
+    end
+
+    it "has a query field for every member" do
+      res = execute(%({ __type(name: "Query") { fields(includeDeprecated: true) { name } } }))
+      names = res["data"]["__type"]["fields"].map { |field| field["name"] }
+      expect(names).to include(*Precure.all_girls.map { |girl| camelize(girl.girl_name) })
+    end
+
+    # The girl* fields were kept for compatibility when the member* fields were added.
+    it "marks the superseded fields as deprecated" do
+      expect(deprecated_fields("Query")).to contain_exactly("girl", "precureAllGirls")
+      expect(deprecated_fields("Member")).to contain_exactly("girlName", "transformMessage")
+      expect(deprecated_fields("Series")).to contain_exactly("girls", "girlsCount")
+      expect(deprecated_fields("Movie")).to contain_exactly("girls")
+      expect(deprecated_fields("Color")).to contain_exactly("girls")
+    end
+  end
 end
