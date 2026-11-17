@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## [4.2.2.0] - 2026-11-17
+* Security fix: `series(seriesName:)` no longer calls arbitrary methods of the server, such as `exit` (#517)
+* Update rubicure gem to 4.2.2 (#448,#483)
+
 ## [4.0.2.0] - 2024-09-18
 ### Breaking changes :bomb:
 * Drop support for Ruby 2.6 (#408)
