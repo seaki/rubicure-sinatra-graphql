@@ -1,4 +1,4 @@
-FROM ruby:3.4.12-alpine3.24
+FROM ruby:3.4.13-alpine3.24
 
 ENV LANG=C.UTF-8
 ENV APP_ROOT=/usr/src/rubicure-sinatra-graphql
